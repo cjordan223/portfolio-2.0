@@ -4,6 +4,7 @@ import Layout from './components/Layout';
 
 // Import theme provider
 import { ThemeProvider } from './themes/ThemeContext';
+import { TerminalProvider } from './contexts/TerminalContext';
 
 // Import pages
 import Home from './pages/Home';
@@ -16,16 +17,18 @@ import CoursePage from './pages/CoursePage';
 const App: React.FC = () => {
   return (
     <ThemeProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Layout><Home /></Layout>} />
-          <Route path="/about" element={<Layout><About /></Layout>} />
-          <Route path="/projects" element={<Layout><Projects /></Layout>} />
-          <Route path="/resume" element={<Layout><Resume /></Layout>} />
-          <Route path="/contact" element={<Layout><Contact /></Layout>} />
-          <Route path="/course/:courseId" element={<Layout><CoursePage /></Layout>} />
-        </Routes>
-      </Router>
+      <TerminalProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Layout><Home /></Layout>} />
+            <Route path="/about" element={<Layout><About /></Layout>} />
+            <Route path="/projects" element={<Layout><Projects /></Layout>} />
+            <Route path="/resume" element={<Layout><Resume /></Layout>} />
+            <Route path="/contact" element={<Layout><Contact /></Layout>} />
+            <Route path="/course/:courseId" element={<Layout><CoursePage /></Layout>} />
+          </Routes>
+        </Router>
+      </TerminalProvider>
     </ThemeProvider>
   );
 };

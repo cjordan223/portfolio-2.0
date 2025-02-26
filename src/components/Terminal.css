@@ -21,6 +21,7 @@
   font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.8);
   margin-top: 0.8rem;
+  margin-bottom: 1.2rem;
   font-weight: normal;
   opacity: 0.8;
 }
@@ -70,4 +71,71 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.slash-command-menu {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 20px;
+  width: calc(100% - 40px);
+  max-height: 300px;
+  overflow-y: auto;
+  border-radius: 8px;
+  z-index: 1000;
+  background-color: transparent !important;
+  backdrop-filter: blur(3px);
+  
+  /* Hide scrollbar but keep functionality */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.slash-command-menu::-webkit-scrollbar {
+  display: none;
+}
+
+.slash-command-header {
+  padding: 10px 15px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  opacity: 0.8;
+  color: white;
+}
+
+.slash-command-item {
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: white !important;
+}
+
+.slash-command-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.slash-command-item.selected {
+  background-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 8px rgba(0, 255, 157, 0.3);
+}
+
+.command-name {
+  font-weight: 500;
+  color: #00ff9d;
+}
+
+.command-description {
+  font-size: 0.85rem;
+  opacity: 0.8;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.command {
+  color: #00ff9d;
+  font-weight: bold;
 } 

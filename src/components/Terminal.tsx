@@ -4,6 +4,7 @@ import Typed from 'typed.js';
 import { useTheme } from '../themes/ThemeContext';
 import CustomDraggable from './CustomDraggable';
 import './Terminal.css'; // This should work now that we have the CSS file
+import { useTerminal } from '../contexts/TerminalContext';
 
 interface TerminalProps {
   welcomeMessage?: string;
@@ -29,10 +30,14 @@ const Terminal: React.FC<TerminalProps> = ({
   const [history, setHistory] = useState<string[]>([]);
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
-  const [isMinimized, setIsMinimized] = useState(false); // Add this state for terminal visibility
+  const [isMinimized, setIsMinimized] = useState(false);
+  const [showSlashMenu, setShowSlashMenu] = useState(false);
+  const [selectedCommandIndex, setSelectedCommandIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const welcomeRef = useRef<HTMLDivElement>(null);
   const outputRef = useRef<HTMLDivElement>(null);
+  const slashMenuRef = useRef<HTMLDivElement>(null);
+  const { setTerminalMinimized } = useTerminal();
 
   // Add a class that we can use in testing
   const terminalClass = isMainTerminal ? "main-terminal" : "secondary-terminal";
@@ -46,7 +51,7 @@ const Terminal: React.FC<TerminalProps> = ({
         const commandList = Object.values(commands)
           .map(cmd => `${cmd.name} - ${cmd.description}`)
           .join('<br>');
-        addToHistory(`Available commands:<br>${commandList}`);
+        addToHistory(`Available commands:<br>${commandList}<br><br>Tip: Type / to quickly access the command menu.`);
       }
     },
     about: {
@@ -96,13 +101,12 @@ const Terminal: React.FC<TerminalProps> = ({
     },
     exit: {
       name: 'exit',
-      description: 'Minimize or hide the terminal',
+      description: 'Minimize terminal and show navigation bar',
       action: () => {
-        addToHistory('Minimizing terminal... (Type "open" anywhere to restore)');
-        // Wait a moment for the message to be visible before minimizing
+        addToHistory('Minimizing terminal... Classic navigation bar will appear. Type "open" anywhere to restore the terminal experience.');
         setTimeout(() => {
           setIsMinimized(true);
-        }, 1000);
+        }, 1500);
       }
     },
     open: {
@@ -139,8 +143,9 @@ const Terminal: React.FC<TerminalProps> = ({
     setCommandHistory(prev => [cmd, ...prev]);
     setHistoryIndex(-1);
 
-    // Process command
-    const commandParts = cmd.trim().split(' ');
+    // Process command - strip the leading slash if present
+    const cleanCommand = cmd.trim().startsWith('/') ? cmd.trim().substring(1) : cmd.trim();
+    const commandParts = cleanCommand.split(' ');
     const commandName = commandParts[0].toLowerCase();
     
     if (commandName in commands) {
@@ -148,7 +153,7 @@ const Terminal: React.FC<TerminalProps> = ({
     } else if (commandName === '') {
       // Do nothing for empty command
     } else {
-      addToHistory(`Command not found: ${commandName}. Type "help" for available commands.`);
+      addToHistory(`Command not found: ${commandName}. Type "help" or "/" for available commands.`);
     }
   };
 
@@ -173,8 +178,41 @@ const Terminal: React.FC<TerminalProps> = ({
     setInput('');
   };
 
-  // Handle key events for command history
+  // Handle key events for command history and menu navigation
   const handleKeyDown = (e: React.KeyboardEvent) => {
+    // If slash menu is shown, handle menu navigation
+    if (showSlashMenu) {
+      const commandKeys = Object.keys(commands);
+      
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (selectedCommandIndex < commandKeys.length - 1) {
+          setSelectedCommandIndex(prev => prev + 1);
+        }
+      } 
+      else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (selectedCommandIndex > 0) {
+          setSelectedCommandIndex(prev => prev - 1);
+        } else if (selectedCommandIndex === 0) {
+          // Move focus back to input when at the top of the list
+          setSelectedCommandIndex(-1);
+        }
+      }
+      else if (e.key === 'Enter' && selectedCommandIndex >= 0) {
+        e.preventDefault();
+        const selectedCommand = commandKeys[selectedCommandIndex];
+        selectCommand(selectedCommand);
+      }
+      else if (e.key === 'Escape') {
+        e.preventDefault();
+        setShowSlashMenu(false);
+        setSelectedCommandIndex(-1);
+      }
+      return;
+    }
+    
+    // Original command history navigation (when slash menu is not shown)
     if (e.key === 'ArrowUp') {
       e.preventDefault();
       if (commandHistory.length > 0 && historyIndex < commandHistory.length - 1) {
@@ -191,6 +229,9 @@ const Terminal: React.FC<TerminalProps> = ({
       } else if (historyIndex === 0) {
         setHistoryIndex(-1);
         setInput('');
+      } else if (input === '/' && showSlashMenu) {
+        // If we're at the slash menu trigger, move into the menu
+        setSelectedCommandIndex(0);
       }
     }
   };
@@ -212,6 +253,84 @@ const Terminal: React.FC<TerminalProps> = ({
       window.removeEventListener('click', handleWindowClick, true);
     };
   }, []);
+
+  // Handle slash command menu
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setInput(value);
+    
+    // Show command menu when slash is typed
+    if (value === '/') {
+      setShowSlashMenu(true);
+      setSelectedCommandIndex(-1); // Reset selection
+    } else if (showSlashMenu && !value.startsWith('/')) {
+      setShowSlashMenu(false);
+      setSelectedCommandIndex(-1); // Reset selection
+    }
+  };
+
+  // Select a command from the slash menu
+  const selectCommand = (commandName: string) => {
+    // Execute the command immediately instead of adding it to the input
+    processCommand(commandName);
+    setInput('');
+    setShowSlashMenu(false);
+    inputRef.current?.focus();
+  };
+
+  // Scroll selected item into view when navigating with keyboard
+  useEffect(() => {
+    if (showSlashMenu && selectedCommandIndex >= 0 && slashMenuRef.current) {
+      const menuElement = slashMenuRef.current;
+      const selectedElement = menuElement.children[selectedCommandIndex + 1]; // +1 for header
+      
+      if (selectedElement) {
+        // Get position of the selected element relative to the menu container
+        const selectedRect = selectedElement.getBoundingClientRect();
+        const menuRect = menuElement.getBoundingClientRect();
+        
+        // Check if selected item is outside the visible area
+        const isAbove = selectedRect.top < menuRect.top;
+        const isBelow = selectedRect.bottom > menuRect.bottom;
+        
+        if (isAbove) {
+          // Scroll up to show the selected item
+          menuElement.scrollTop += selectedRect.top - menuRect.top;
+        } else if (isBelow) {
+          // Scroll down to show the selected item
+          menuElement.scrollTop += selectedRect.bottom - menuRect.bottom;
+        }
+      }
+    }
+  }, [selectedCommandIndex, showSlashMenu]);
+
+  // Render slash command menu with the new ref
+  const renderSlashMenu = () => {
+    if (!showSlashMenu) return null;
+    
+    const commandKeys = Object.keys(commands);
+    
+    return (
+      <div className="slash-command-menu" ref={slashMenuRef}>
+        <div className="slash-command-header">Available Commands</div>
+        {commandKeys.map((cmd, index) => (
+          <div 
+            key={cmd} 
+            className={`slash-command-item ${index === selectedCommandIndex ? 'selected' : ''}`}
+            onClick={() => selectCommand(cmd)}
+          >
+            <span className="command-name">{cmd}</span>
+            <span className="command-description">{commands[cmd].description}</span>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  // Add this effect to sync the states
+  useEffect(() => {
+    setTerminalMinimized(isMinimized);
+  }, [isMinimized, setTerminalMinimized]);
 
   // If terminal is minimized, show only a small indicator
   if (isMinimized) {
@@ -291,8 +410,9 @@ const Terminal: React.FC<TerminalProps> = ({
           ref={inputRef}
           type="text"
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={handleInputChange}
           onKeyDown={handleKeyDown}
+          placeholder="Type / for options"
           autoFocus
           style={{
             backgroundColor: 'transparent',
@@ -303,9 +423,14 @@ const Terminal: React.FC<TerminalProps> = ({
             fontFamily: 'inherit',
             fontSize: 'inherit',
             width: 'calc(100% - 20px)',
-            marginLeft: '8px'
+            marginLeft: '8px',
+            '::placeholder': {
+              color: 'rgba(255, 255, 255, 0.5)',
+              opacity: 0.7
+            }
           }}
         />
+        {renderSlashMenu()}
       </form>
     </div>
   );
@@ -339,8 +464,9 @@ const Terminal: React.FC<TerminalProps> = ({
             ref={inputRef}
             type="text"
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={handleInputChange}
             onKeyDown={handleKeyDown}
+            placeholder="Type / for options"
             autoFocus
             style={{
               backgroundColor: 'transparent',
@@ -351,9 +477,14 @@ const Terminal: React.FC<TerminalProps> = ({
               fontFamily: 'inherit',
               fontSize: 'inherit',
               width: 'calc(100% - 20px)',
-              marginLeft: '8px'
+              marginLeft: '8px',
+              '::placeholder': {
+                color: 'rgba(255, 255, 255, 0.5)',
+                opacity: 0.7
+              }
             }}
           />
+          {renderSlashMenu()}
         </form>
       </div>
     );

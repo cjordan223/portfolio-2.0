@@ -11,7 +11,7 @@ const Home: React.FC = () => {
       {/* This is the only terminal that should appear on the home page */}
       <div className="floating-terminal" data-testid="home-terminal">
         <Terminal 
-          welcomeMessage="Welcome to Conner Jordan's Portfolio" 
+          welcomeMessage="Web Design | Security | Engineering" 
           isMainTerminal={true}
         />
       </div>
