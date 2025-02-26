@@ -257,22 +257,10 @@ const Projects: React.FC = () => {
     },
   ], []);
 
-  // Categories with friendly display names - now with "All Projects" option
-  const categories = [
-    { id: 'all', name: 'All' },
-    { id: 'featured', name: 'Featured' },
-    { id: 'webapps', name: 'Web Applications' },
-    { id: 'programming', name: 'Programming & Data' },
-    { id: 'education', name: 'Academic' },
-    { id: 'client', name: 'Client Work' },
-  ];
-
-  // Filter projects based on category only (no tag filtering)
+  // Filter projects based on active category
   useEffect(() => {
-    const filteredProjects = projects.filter(project => 
-      activeCategory === 'all' || project.category === activeCategory
-    );
-    setFilteredProjects(filteredProjects);
+    const filtered = projects.filter(project => project.category === activeCategory);
+    setFilteredProjects(filtered);
   }, [activeCategory, projects]);
 
   // Animation variants
@@ -295,6 +283,14 @@ const Projects: React.FC = () => {
     }
   };
 
+  // Categories for the filter buttons
+  const categories = [
+    { id: 'featured', name: 'Featured' },
+    { id: 'webapps', name: 'Web Apps' },
+    { id: 'programming', name: 'Programming' },
+    { id: 'education', name: 'Education' },
+  ];
+
   return (
     <div className="projects-container">
       <motion.h1
@@ -303,11 +299,11 @@ const Projects: React.FC = () => {
         transition={{ duration: 0.5 }}
         style={{ color: theme.primary }}
       >
-        My Projects
+        Projects & Portfolio
       </motion.h1>
 
       {/* Category navigation */}
-      <motion.div 
+      <motion.div
         className="category-nav"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -340,121 +336,98 @@ const Projects: React.FC = () => {
           filteredProjects.map((project, index) => (
             <motion.div 
               key={index}
-              className="project-card"
+              className="card bg-base-100 shadow-xl"
               style={{ backgroundColor: theme.cardBackground }}
               variants={itemVariants}
             >
-              <div className="project-image-container" style={{ height: project.imageHeight || '180px' }}>
+              <figure className="project-image-wrapper">
                 <img 
                   src={project.image || '/img/placeholder-project.jpg'} 
                   alt={project.name} 
                   className="project-image"
                 />
-              </div>
+              </figure>
               
-              <div className="project-content">
-                <h3 style={{ color: theme.primary }}>{project.name}</h3>
+              <div className="card-body">
+                <h2 className="card-title" style={{ color: theme.primary }}>
+                  {project.name}
+                  {project.category === 'featured' && (
+                    <div className="badge badge-secondary" style={{ 
+                      backgroundColor: theme.accent,
+                      color: 'white'
+                    }}>
+                      FEATURED
+                    </div>
+                  )}
+                </h2>
                 
-                <div className="project-tags">
+                <p className="project-description">{project.description}</p>
+                
+                <div className="card-actions justify-end">
                   {project.tags.map((tag, tagIndex) => (
-                    <span 
+                    <div 
                       key={tagIndex}
-                      className="tag"
+                      className="badge badge-outline"
                       style={{ 
-                        backgroundColor: theme.cardBackground,
+                        borderColor: theme.border,
                         color: theme.text
                       }}
                     >
                       {tag}
-                    </span>
+                    </div>
                   ))}
                 </div>
                 
-                <p>{project.description}</p>
-                
-                {/* Educational course card - make course link prominent */}
-                {project.category === 'education' && (
-                  <div className="course-link-container" style={{ 
-                    marginTop: '1.5rem', 
-                    textAlign: 'center' 
-                  }}>
+                <div className="card-actions mt-auto pt-4">
+                  {/* Educational course card - make course link prominent */}
+                  {project.category === 'education' && (
                     <Link 
-                      to={`/course/${project.name.split(':')[0].toLowerCase().replace(/\s/g, '')}`}
-                      className="course-button"
+                      to={project.site || `/course/${project.name.split(':')[0].toLowerCase().replace(/\s/g, '')}`}
+                      className="btn btn-primary w-full"
                       style={{ 
                         backgroundColor: theme.primary,
                         color: 'white',
-                        padding: '0.75rem 1.5rem',
-                        borderRadius: '8px',
-                        textDecoration: 'none',
-                        fontWeight: 'bold',
-                        display: 'inline-block',
-                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.15)',
-                        transition: 'all 0.2s ease'
                       }}
                     >
                       View Course Details
                     </Link>
-                  </div>
-                )}
-                
-                {/* Show GitHub and demo links only for non-educational projects */}
-                {project.category !== 'education' && (
-                  <div className="project-links" style={{ 
-                    display: 'flex', 
-                    justifyContent: 'center', 
-                    gap: '1rem', 
-                    marginTop: '1rem' 
-                  }}>
-                    {project.path && (
-                      <a 
-                        href={project.path} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="project-link github-link"
-                        style={{ 
-                          backgroundColor: '#24292e',
-                          color: 'white',
-                          padding: '0.6rem 1rem',
-                          borderRadius: '6px',
-                          textDecoration: 'none',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.5rem',
-                          fontWeight: 500,
-                          boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)',
-                          transition: 'transform 0.2s'
-                        }}
-                      >
-                        GitHub Code
-                      </a>
-                    )}
-                    
-                    {project.site && project.category !== 'education' && (
-                      <a 
-                        href={project.site.startsWith('/') ? project.site : project.site} 
-                        target={project.site.startsWith('/') ? '_self' : '_blank'} 
-                        rel="noopener noreferrer"
-                        className="project-link demo-link"
-                        style={{ 
-                          backgroundColor: theme.accent || '#2196f3',
-                          color: 'white',
-                          padding: '0.6rem 1rem',
-                          borderRadius: '6px',
-                          textDecoration: 'none',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.5rem',
-                          fontWeight: 500,
-                          boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)',
-                          transition: 'transform 0.2s'
-                        }}
-                      >
-                        {project.site.startsWith('/') ? 'View Details' : 'Live Demo'}
-                      </a>
-                    )}
-                  </div>
-                )}
+                  )}
+                  
+                  {/* Show GitHub and demo links only for non-educational projects */}
+                  {project.category !== 'education' && (
+                    <>
+                      {project.path && (
+                        <a 
+                          href={project.path} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="btn btn-outline flex-1"
+                          style={{ 
+                            borderColor: '#24292e',
+                            color: '#24292e',
+                          }}
+                        >
+                          GitHub Code
+                        </a>
+                      )}
+                      
+                      {project.site && (
+                        <a 
+                          href={project.site.startsWith('/') ? project.site : project.site} 
+                          target={project.site.startsWith('/') ? '_self' : '_blank'} 
+                          rel="noopener noreferrer"
+                          className="btn btn-primary flex-1"
+                          style={{ 
+                            backgroundColor: theme.accent || '#2196f3',
+                            color: 'white',
+                          }}
+                        >
+                          {project.site.startsWith('/') ? 'View Details' : 'Live Demo'}
+                        </a>
+                      )}
+                    </>
+                  )}
+                </div>
               </div>
             </motion.div>
           ))
