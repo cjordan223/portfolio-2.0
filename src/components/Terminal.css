@@ -1,0 +1,73 @@
+.home-terminal-text {
+  font-family: 'JetBrains Mono', monospace;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.6;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+  font-size: 1.1rem;
+  position: relative;
+  padding-top: 40px; /* Add space at the top */
+}
+
+.welcome-message {
+  color: #00ff9d;
+  margin-bottom: 1.5rem;
+  font-size: 1.6rem;
+  text-shadow: 0 0 14px rgba(0, 255, 157, 0.5);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.help-hint {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 0.8rem;
+  font-weight: normal;
+  opacity: 0.8;
+}
+
+.click-to-type {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  opacity: 0.7;
+  text-align: center;
+}
+
+.terminal-line {
+  margin-bottom: 0.7rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.input-line {
+  display: flex;
+  align-items: center;
+}
+
+.prompt {
+  color: #00ff9d;
+  text-shadow: 0 0 8px rgba(0, 255, 157, 0.5);
+}
+
+.main-terminal {
+  /* Main terminal specific styles */
+}
+
+.secondary-terminal {
+  /* Secondary terminal specific styles */
+}
+
+.terminal-handle {
+  cursor: move;
+  user-select: none;
+}
+
+.floating-cli {
+  max-width: 600px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+} 

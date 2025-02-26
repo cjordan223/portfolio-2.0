@@ -1,0 +1,410 @@
+:root {
+  /* Default light theme variables */
+  --background: #f5f5f5;
+  --text: #333333;
+  --primary: #2a9d8f;
+  --secondary: #264653;
+  --accent: #e76f51;
+  --command-prompt: #2a9d8f;
+  --command-text: #264653;
+  --success: #2a9d8f;
+  --error: #e63946;
+  --warning: #ee9b00;
+  --border: #264653;
+  --card-background: #ffffff;
+
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Apply dark theme when data-theme is set to dark */
+body[data-theme='dark'] {
+  --background: #0f0f23;
+  --text: #cccccc;
+  --primary: #00ff00;
+  --secondary: #39ff14;
+  --accent: #ff00ff;
+  --command-prompt: #39ff14;
+  --command-text: #ffffff;
+  --success: #00ff00;
+  --error: #ff0000;
+  --warning: #ffff00;
+  --border: #39ff14;
+  --card-background: #1a1a2e;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a {
+  font-weight: 500;
+  color: var(--primary);
+  text-decoration: inherit;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--accent);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--primary);
+}
+
+/* Terminal-like styles */
+.terminal {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: var(--card-background);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.terminal-line {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.prompt {
+  color: var(--command-prompt);
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+.command {
+  color: var(--command-text);
+}
+
+/* Blinking cursor */
+.cursor {
+  display: none; /* Hide any additional cursors */
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Button styles */
+button {
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  padding: 8px 16px;
+  font-family: inherit;
+  background-color: var(--background);
+  color: var(--primary);
+  cursor: pointer;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+button:hover {
+  border-color: var(--accent);
+  background-color: var(--card-background);
+}
+
+button:focus,
+button:focus-visible {
+  outline: 2px solid var(--primary);
+}
+
+/* Container styles */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Add these styles for the floating CLI */
+.floating-cli {
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  width: 600px;
+  padding: 10px;
+}
+
+.terminal-line {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.prompt {
+  margin-right: 8px;
+  font-weight: bold;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.command {
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.welcome-message {
+  margin-bottom: 2rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.terminal-output {
+  margin-bottom: 1rem;
+}
+
+.terminal-output .terminal-line {
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Update the cursor style for the floating CLI */
+.visible-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 18px;
+  background-color: rgba(186, 171, 149, 0.7);
+  animation: blink 1s step-end infinite;
+  position: absolute;
+  margin-left: -10px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+}
+
+/* Add a visible cursor indicator */
+.visible-cursor {
+  display: inline-block;
+  width: 10px;
+  height: 20px;
+  background-color: rgba(186, 171, 149, 0.7);
+  animation: blink 1s step-end infinite;
+  position: absolute;
+  margin-left: -10px;
+}
+
+/* Add "click to type" instructions to the page */
+.home-container::after {
+  content: "Click anywhere to start typing";
+  position: fixed;
+  bottom: 130px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  pointer-events: none;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.home-container:focus-within::after {
+  opacity: 0;
+}
+
+/* Open concept layout styles */
+.open-layout {
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.minimal-nav {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 20px;
+  z-index: 10;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  padding: 8px 16px;
+  border-radius: 30px;
+}
+
+.nav-link {
+  font-size: 0.9rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease;
+}
+
+.nav-link:hover {
+  transform: translateY(-2px);
+}
+
+.open-container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 0;
+}
+
+.minimal-footer {
+  position: fixed;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.8rem;
+  opacity: 0.7;
+  z-index: 10;
+}
+
+.minimal-footer p {
+  margin-bottom: 5px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.social-links {
+  display: flex;
+  gap: 15px;
+}
+
+.social-links a {
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Improve floating CLI styles */
+.floating-cli {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Fix the cursor positioning and appearance */
+.visible-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 18px;
+  background-color: rgba(186, 171, 149, 0.7);
+  animation: blink 1s step-end infinite;
+  position: relative;
+  margin-left: 0;
+  vertical-align: middle;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+}
+
+/* Replace the desert-background with video-background styles */
+.video-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+
+#background-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Add an overlay for better text visibility if needed */
+.video-background::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2); /* Adjust opacity as needed */
+}
+
+/* Make sure the input doesn't show its cursor */
+input[type="text"] {
+  caret-color: transparent;
+}
+
+/* Improve hero section positioning and readability */
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+  max-width: 90%;
+  margin: 0 auto 2rem auto;
+}
+
+.hero-section h1 {
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+.hero-section h2 {
+  font-size: 1.5rem;
+  opacity: 0.9;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+/* Center the home container vertically and horizontally */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Improve the terminal visibility */
+.terminal-container {
+  width: 100%;
+  max-width: 800px;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Add line height to terminal text for better readability */
+.terminal-line {
+  line-height: 1.6;
+}
+
+/* Keep the minimized terminal styles */
+.terminal-minimized {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  z-index: 100;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+  font-size: 0.9rem;
+}

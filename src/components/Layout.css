@@ -1,0 +1,106 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  padding: 1rem 0;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+main {
+  flex: 1;
+  padding: 2rem 0;
+}
+
+footer {
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.video-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -10;
+  overflow: hidden;
+}
+
+#background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+}
+
+/* Semi-transparent overlay for better text contrast */
+.video-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.25);
+  z-index: -9;
+}
+
+/* Ensure layout takes full viewport */
+.open-layout {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.open-container {
+  flex: 1;
+  padding-bottom: 80px; /* Add extra padding for footer */
+  width: 100%;
+}
+
+.minimal-footer {
+  width: 100%;
+  text-align: center;
+  padding: 1.5rem 0;
+  margin-top: 2rem;
+  position: relative;
+  z-index: 10;
+}
+
+.social-links a {
+  color: #00ff9d;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.social-links a:hover {
+  color: #00cc7a;
+} 
