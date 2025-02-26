@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;600;700&display=swap');
+
 :root {
   /* Default light theme variables */
   --background: #f5f5f5;
@@ -13,14 +15,16 @@
   --border: #264653;
   --card-background: #ffffff;
 
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
-  line-height: 1.5;
+  font-family: 'Roboto Mono', monospace;
+  line-height: 1.6;
   font-weight: 400;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --font-family: 'Roboto Mono', monospace;
 }
 
 /* Apply dark theme when data-theme is set to dark */
@@ -49,6 +53,8 @@ body {
   background-color: var(--background);
   color: var(--text);
   transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: var(--font-family);
+  overflow-x: hidden;
 }
 
 a {
@@ -68,7 +74,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Terminal-like styles */
 .terminal {
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-family: 'Roboto Mono', monospace;
   padding: 20px;
   border-radius: 5px;
   background-color: var(--card-background);
@@ -108,7 +114,7 @@ button {
   border-radius: 4px;
   border: 1px solid var(--border);
   padding: 8px 16px;
-  font-family: inherit;
+  font-family: 'Roboto Mono', monospace;
   background-color: var(--background);
   color: var(--primary);
   cursor: pointer;
@@ -373,4 +379,9 @@ input[type="text"] {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s;
   font-size: 0.9rem;
+}
+
+/* Update all inputs and buttons to use the same font */
+button, input, textarea, select {
+  font-family: 'Roboto Mono', monospace;
 }

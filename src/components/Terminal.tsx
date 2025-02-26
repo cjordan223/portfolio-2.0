@@ -179,39 +179,25 @@ const Terminal: React.FC<TerminalProps> = ({
   };
 
   // Handle key events for command history and menu navigation
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    // If slash menu is shown, handle menu navigation
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // Slash menu navigation
     if (showSlashMenu) {
-      const commandKeys = Object.keys(commands);
-      
       if (e.key === 'ArrowDown') {
         e.preventDefault();
-        if (selectedCommandIndex < commandKeys.length - 1) {
-          setSelectedCommandIndex(prev => prev + 1);
-        }
-      } 
-      else if (e.key === 'ArrowUp') {
+        setSelectedCommandIndex(prev => 
+          prev < Object.keys(commands).length - 1 ? prev + 1 : prev
+        );
+      } else if (e.key === 'ArrowUp') {
         e.preventDefault();
-        if (selectedCommandIndex > 0) {
-          setSelectedCommandIndex(prev => prev - 1);
-        } else if (selectedCommandIndex === 0) {
-          // Move focus back to input when at the top of the list
-          setSelectedCommandIndex(-1);
-        }
-      }
-      else if (e.key === 'Enter' && selectedCommandIndex >= 0) {
+        setSelectedCommandIndex(prev => prev > 0 ? prev - 1 : prev);
+      } else if (e.key === 'Enter' && selectedCommandIndex >= 0) {
         e.preventDefault();
-        const selectedCommand = commandKeys[selectedCommandIndex];
-        selectCommand(selectedCommand);
-      }
-      else if (e.key === 'Escape') {
+        selectCommand(Object.keys(commands)[selectedCommandIndex]);
+      } else if (e.key === 'Escape') {
         e.preventDefault();
         setShowSlashMenu(false);
-        setSelectedCommandIndex(-1);
       }
-      return;
     }
-    
     // Original command history navigation (when slash menu is not shown)
     if (e.key === 'ArrowUp') {
       e.preventDefault();
@@ -259,13 +245,12 @@ const Terminal: React.FC<TerminalProps> = ({
     const value = e.target.value;
     setInput(value);
     
-    // Show command menu when slash is typed
+    // Show slash menu when '/' is typed at beginning
     if (value === '/') {
       setShowSlashMenu(true);
-      setSelectedCommandIndex(-1); // Reset selection
-    } else if (showSlashMenu && !value.startsWith('/')) {
+      setSelectedCommandIndex(0); // Select first command by default
+    } else {
       setShowSlashMenu(false);
-      setSelectedCommandIndex(-1); // Reset selection
     }
   };
 
@@ -331,6 +316,29 @@ const Terminal: React.FC<TerminalProps> = ({
   useEffect(() => {
     setTerminalMinimized(isMinimized);
   }, [isMinimized, setTerminalMinimized]);
+
+  // Add debug output
+  useEffect(() => {
+    console.log(`Terminal initialized: isMainTerminal=${isMainTerminal}, slashMenuRef=${!!slashMenuRef.current}`);
+  }, [isMainTerminal]);
+
+  // Add this effect to ensure focus when terminal is shown
+  useEffect(() => {
+    // Focus the input when the terminal is displayed
+    if (!isMinimized && inputRef.current) {
+      inputRef.current.focus();
+      
+      // Debugging focus issues
+      console.log('Attempting to focus terminal input');
+    }
+  }, [isMinimized]);
+
+  // Add a click handler on the terminal container to focus the input
+  const handleTerminalClick = () => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
 
   // If terminal is minimized, show only a small indicator
   if (isMinimized) {
@@ -497,7 +505,13 @@ const Terminal: React.FC<TerminalProps> = ({
       initialPosition={{ x: 20, y: 100 }}
       disabled={terminalClass === "main-terminal"}
     >
-      {terminalContent}
+      <div 
+        className={`terminal-container ${terminalClass}`} 
+        onClick={handleTerminalClick}
+        data-testid="terminal-container"
+      >
+        {terminalContent}
+      </div>
     </CustomDraggable>
   );
 };

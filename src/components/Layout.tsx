@@ -5,7 +5,7 @@ import Terminal from './Terminal';
 import { useTheme } from '../themes/ThemeContext';
 import { useTerminal } from '../contexts/TerminalContext';
 import './Layout.css';
-import backgroundVideo from '/media/new_background.mp4';
+import backgroundVideo from '/media/new_background_compressed.mp4';
 
 interface LayoutProps {
   children: ReactNode;
@@ -34,10 +34,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="video-overlay"></div>
       </div>
       
-      {/* Show navigation only if terminal is minimized or on non-home pages */}
-      {(isTerminalMinimized || !isHomePage) && (
+      {/* Show navigation only if terminal is minimized and on non-home pages */}
+      {(isTerminalMinimized && !isHomePage) && (
         <nav className="minimal-nav">
-          <Link to="/" className="nav-link" style={{ color: theme.text }}>Home</Link>
           <Link to="/about" className="nav-link" style={{ color: theme.text }}>About</Link>
           <Link to="/projects" className="nav-link" style={{ color: theme.text }}>Projects</Link>
           <Link to="/resume" className="nav-link" style={{ color: theme.text }}>Resume</Link>
