@@ -303,9 +303,7 @@ const Terminal: React.FC<TerminalProps> = ({
     const value = e.target.value;
     setInput(value);
     
-    console.log(`Input changed to: "${value}"`);
-    
-    // Show slash menu when exactly "/" is typed
+    // Show slash menu when exactly "/" is typed, regardless of which terminal it is
     if (value === '/') {
       console.log("Showing slash menu");
       setShowSlashMenu(true);
@@ -385,12 +383,39 @@ const Terminal: React.FC<TerminalProps> = ({
     }
   }, [isMinimized]);
 
-  // Add a click handler on the terminal container to focus the input
+  // Focus input on any click within the terminal
   const handleTerminalClick = () => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
   };
+
+  // Make sure the / menu and focus work in all terminal instances
+  useEffect(() => {
+    // This ensures the input field is focused when the terminal is clicked
+    const handleWindowFocus = () => {
+      if (inputRef.current && document.activeElement !== inputRef.current) {
+        inputRef.current.focus();
+      }
+    };
+
+    document.addEventListener('click', handleWindowFocus);
+    
+    // Fix for the slash menu in draggable terminal
+    const handleSlashKey = (e: KeyboardEvent) => {
+      if (e.key === '/' && document.activeElement === inputRef.current) {
+        setShowSlashMenu(true);
+        setSelectedCommandIndex(0);
+      }
+    };
+    
+    document.addEventListener('keydown', handleSlashKey);
+    
+    return () => {
+      document.removeEventListener('click', handleWindowFocus);
+      document.removeEventListener('keydown', handleSlashKey);
+    };
+  }, []);
 
   // Keep the current selected index reference
   useEffect(() => {
@@ -625,6 +650,7 @@ const Terminal: React.FC<TerminalProps> = ({
         data-testid="terminal-container"
       >
         {terminalContent}
+        {showSlashMenu && !isHomePage && renderSlashMenu()}
       </div>
     </CustomDraggable>
   );

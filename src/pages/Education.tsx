@@ -12,6 +12,7 @@ interface Project {
   image?: string;
   path?: string;
   site?: string;
+  imageHeight?: string;
 }
 
 const Education: React.FC = () => {
@@ -36,6 +37,7 @@ const Education: React.FC = () => {
       tags: ["Academic Research", "Technical Writing", "Ethics"],
       description: "Overview of the Computer Science and Communication Design disciplines. Students develop a comprehensive academic plan, research career opportunities, and prepare for their academic pathway.",
       image: "https://csumb.edu/media/csumb/images-body-default/cs-image.jpeg",
+      imageHeight: "100px",
       site: "/course/cst300"
     },
     {

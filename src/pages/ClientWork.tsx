@@ -36,7 +36,7 @@ const ClientWork: React.FC = () => {
       category: "client",
       tags: ["Web Design", "CMS", "Small Business"],
       description: "Paving Contractor website built with a custom CMS solution. Created a responsive design that showcases their services and portfolio of work.",
-      image: "public/img/sprague.png",
+      image: "/img/sprague.png",
       site: "https://www.espraguepavingandsons.net/",
     },
     {
@@ -44,7 +44,7 @@ const ClientWork: React.FC = () => {
       category: "client",
       tags: ["Web Design", "CMS", "Construction"],
       description: "General Contractor website with service listings, portfolio, and contact functionality. Designed to attract new business and showcase completed projects.",
-      image: "public/img/Lanes.png",
+      image: "/img/Lanes.png",
       site: "https://www.lanesconstructionky.com/",
     },
     {
@@ -52,7 +52,7 @@ const ClientWork: React.FC = () => {
       category: "client",
       tags: ["Web Design", "CMS", "Storage Services"],
       description: "Storage Service website with facility information, pricing, and online booking capabilities. Includes image galleries of storage units.",
-      image: "public/img/Storage.png",
+      image: "/img/Storage.png",
       site: "https://www.amendolastorage.com/",
     },
     {
@@ -60,15 +60,15 @@ const ClientWork: React.FC = () => {
       category: "client",
       tags: ["Web Design", "CMS", "Non-Profit"],
       description: "Baptist Church website featuring service times, event calendar, sermon archives, and community outreach information.",
-      image: "public/img/LO.png",
+      image: "/img/LO.png",
       site: "https://www.loneoakbaptistsnook.org/",
     },
     {
       name: "Carpentry Solutions",
       category: "client",
-      tags: ["Web Design", "CMS", "Construction"],
-      description: "Framing Service website showcasing carpentry expertise, project galleries, and service offerings for residential and commercial clients.",
-      image: "public/img/carpentry.png",
+      tags: ["Web Design", "CMS", "Small Business"],
+      description: "Custom website development for a carpentry and woodworking business, featuring portfolio of completed projects and contact forms.",
+      image: "/img/LO.png",
       site: "https://www.carpentrysolutionsinfo.com/",
     },
   ], []);
