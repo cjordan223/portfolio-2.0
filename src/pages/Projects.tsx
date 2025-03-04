@@ -37,7 +37,7 @@ const Projects: React.FC = () => {
       category: "featured",
       tags: ["React", "Spring", "Full Stack", "Database"],
       description: "3 person project. A comprehensive student registration system with secure authentication and role-based access control for students, instructors, and system admins. More info in archives > cst438.",
-      image: "https://lh3.googleusercontent.com/proxy/eKBEK2wSlZC1szJe8i6_rkWS5UIH02dHDRJxWxhUmqirbm-G1CbiAYGZ6bf8NxV0FobQzfDBr5ERJfUuSFUf1gKy2M7K",
+      image: "https://www.higher-education-marketing.com/wp-content/uploads/2022/10/iStock-1177184973.jpg",
       path: "https://github.com/cjordan223/cst438_Assignment3/",
     },
     {
@@ -103,13 +103,17 @@ const Projects: React.FC = () => {
       name: "Pandas & Numpy Data Analysis",
       category: "programming",
       tags: ["Python", "Pandas", "NumPy", "Data Analysis"],
-      description: "Data analysis toolkit using Python's Pandas and NumPy libraries for statistical operations."
+      description: "Data analysis toolkit using Python's Pandas and NumPy libraries for statistical operations.",
+      image: "public/img/pandas.jpeg",
+
     },
     {
       name: "Data Structures & Algorithms",
       category: "programming",
       tags: ["Java", "DSA", "Computer Science", "Algorithms"],
-      description: "Implementation of classic data structures and algorithms in Java with performance analysis."
+      description: "Implementation of classic data structures and algorithms in Java with performance analysis.",
+      image: "public/img/DP.png",
+
     },
     {
       name: "CST 300: Major ProSeminar",
@@ -172,7 +176,7 @@ const Projects: React.FC = () => {
       category: "education",
       tags: ["Social Impact", "Digital Ethics", "Inclusivity"],
       description: "Provides students with key knowledge of race, gender, class in the digital landscape.",
-      image: "https://yt3.googleusercontent.com/4YAaX7CsQ-paadHsNvC6wdv2nE_7VTKpoNJOTwFhHL4rQqLC8WFe6mNxL-z-e6sfHZbHG-ucPA=s900-c-k-c0x00ffffff-no-rj",
+      image: "public/img/RGI.jpeg",
       site: "/course/cst462s"
     },
     {
@@ -180,7 +184,7 @@ const Projects: React.FC = () => {
       category: "education",
       tags: ["Design", "UI/UX", "Digital Media"],
       description: "Introduction to digital design principles and practices.",
-      image: "https://yt3.googleusercontent.com/4YAaX7CsQ-paadHsNvC6wdv2nE_7VTKpoNJOTwFhHL4rQqLC8WFe6mNxL-z-e6sfHZbHG-ucPA=s900-c-k-c0x00ffffff-no-rj",
+      image: "public/img/DAD.png",
       site: "/course/cst328"
     },
     {
@@ -220,7 +224,7 @@ const Projects: React.FC = () => {
       category: "client",
       tags: ["Web Design", "CMS", "Small Business"],
       description: "Paving Contractor website built with a custom CMS solution. Created a responsive design that showcases their services and portfolio of work.",
-      image: "/img/sprague.png",
+      image: "public/img/sprague.png",
       site: "https://www.espraguepavingandsons.net/",
     },
     {
@@ -228,7 +232,7 @@ const Projects: React.FC = () => {
       category: "client",
       tags: ["Web Design", "CMS", "Construction"],
       description: "General Contractor website with service listings, portfolio, and contact functionality. Designed to attract new business and showcase completed projects.",
-      image: "/img/Lanes.png",
+      image: "public/img/Lanes.png",
       site: "https://www.lanesconstructionky.com/",
     },
     {
@@ -236,7 +240,7 @@ const Projects: React.FC = () => {
       category: "client",
       tags: ["Web Design", "CMS", "Storage Services"],
       description: "Storage Service website with facility information, pricing, and online booking capabilities. Includes image galleries of storage units.",
-      image: "/img/Storage.png",
+      image: "public/img/Storage.png",
       site: "https://www.amendolastorage.com/",
     },
     {
@@ -244,7 +248,7 @@ const Projects: React.FC = () => {
       category: "client",
       tags: ["Web Design", "CMS", "Non-Profit"],
       description: "Baptist Church website featuring service times, event calendar, sermon archives, and community outreach information.",
-      image: "/img/LO.png",
+      image: "public/img/LO.png",
       site: "https://www.loneoakbaptistsnook.org/",
     },
     {
@@ -252,7 +256,7 @@ const Projects: React.FC = () => {
       category: "client",
       tags: ["Web Design", "CMS", "Construction"],
       description: "Framing Service website showcasing carpentry expertise, project galleries, and service offerings for residential and commercial clients.",
-      image: "/img/carpentry.png",
+      image: "public/img/carpentry.png",
       site: "https://www.carpentrysolutionsinfo.com/",
     },
   ], []);
@@ -289,6 +293,7 @@ const Projects: React.FC = () => {
     { id: 'webapps', name: 'Web Apps' },
     { id: 'programming', name: 'Programming' },
     { id: 'education', name: 'Education' },
+    { id: 'client', name: 'Client Work' },
   ];
 
   return (
