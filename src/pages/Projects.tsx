@@ -101,19 +101,17 @@ const Projects: React.FC = () => {
     },
     {
       name: "Pandas & Numpy Data Analysis",
-      category: "programming",
+      category: "datascience",
       tags: ["Python", "Pandas", "NumPy", "Data Analysis"],
       description: "Data analysis toolkit using Python's Pandas and NumPy libraries for statistical operations.",
       image: "public/img/pandas.jpeg",
-
     },
     {
       name: "Data Structures & Algorithms",
-      category: "programming",
+      category: "datascience",
       tags: ["Java", "DSA", "Computer Science", "Algorithms"],
       description: "Implementation of classic data structures and algorithms in Java with performance analysis.",
       image: "public/img/DP.png",
-
     },
     {
       name: "CST 300: Major ProSeminar",
@@ -254,10 +252,34 @@ const Projects: React.FC = () => {
     {
       name: "Carpentry Solutions",
       category: "client",
-      tags: ["Web Design", "CMS", "Construction"],
-      description: "Framing Service website showcasing carpentry expertise, project galleries, and service offerings for residential and commercial clients.",
-      image: "public/img/carpentry.png",
+      tags: ["Web Design", "CMS", "Small Business"],
+      description: "Custom website development for a carpentry and woodworking business, featuring portfolio of completed projects and contact forms.",
+      image: "public/img/CS.png",
       site: "https://www.carpentrysolutionsinfo.com/",
+    },
+    {
+      name: "Student Housing Data Analysis",
+      category: "datascience",
+      tags: ["Python", "Jupyter", "Data Analysis", "Pandas"],
+      description: "Analysis of student housing data, exploring factors affecting housing choices and preferences among university students.",
+      image: "public/img/jupyter.png",
+      site: "/html/studenthousing.html"
+    },
+    {
+      name: "Internet Speed Test Comparison",
+      category: "datascience",
+      tags: ["Python", "Jupyter", "Data Visualization", "Analysis"],
+      description: "Comparative analysis of internet service providers' performance based on speed test data across different regions.",
+      image: "public/img/jupyter.png",
+      site: "/html/speedtest_compare.html"
+    },
+    {
+      name: "Campaign Data Exploration",
+      category: "datascience",
+      tags: ["Python", "Jupyter", "Data Science", "Marketing"],
+      description: "Exploratory analysis of marketing campaign data to identify patterns and success factors for different customer segments.",
+      image: "public/img/jupyter.png",
+      site: "/html/campaign-exploration-1.html"
     },
   ], []);
 
@@ -291,7 +313,7 @@ const Projects: React.FC = () => {
   const categories = [
     { id: 'featured', name: 'Featured' },
     { id: 'webapps', name: 'Web Apps' },
-    { id: 'programming', name: 'Programming' },
+    { id: 'datascience', name: 'Data science' },
     { id: 'education', name: 'Education' },
     { id: 'client', name: 'Client Work' },
   ];
