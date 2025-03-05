@@ -3,6 +3,7 @@ import { useTheme } from '../themes/ThemeContext';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import './Projects.css';
+import CustomDraggable from '../components/CustomDraggable';
 
 interface Project {
   name: string;
@@ -34,7 +35,7 @@ const Projects: React.FC = () => {
       imageHeight: "140px"
     },
     {
-      name: "Student Portal (Full Stack)",
+      name: "Student Portal",
       category: "featured",
       tags: ["React", "Spring", "Full Stack", "Database"],
       description: "3 person project. A comprehensive student registration system with secure authentication and role-based access control for students, instructors, and system admins. More info in archives > cst438.",
@@ -113,7 +114,7 @@ const Projects: React.FC = () => {
       category: "datascience",
       tags: ["Java", "DSA", "Computer Science", "Algorithms"],
       description: "Implementation of classic data structures and algorithms in Java with performance analysis.",
-      image: "/img/DP.png",
+      image: "https://datastructuresandalgorithm.com/wp-content/uploads/2022/11/DSA.png",
       site: "https://github.com/cjordan223/DSA-collection.git"
     },
     {

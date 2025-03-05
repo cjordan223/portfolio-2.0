@@ -44,6 +44,13 @@ const Terminal: React.FC<TerminalProps> = ({
 
   // Updated commands with your real information
   const commands: Record<string, Command> = {
+    clear: {
+      name: 'clear',
+      description: 'Clear terminal',
+      action: () => {
+        setHistory([]);
+      }
+    },
     help: {
       name: 'help',
       description: 'Show all available commands',
@@ -92,17 +99,7 @@ const Terminal: React.FC<TerminalProps> = ({
       name: 'phishfinder',
       description: 'Learn about my capstone project',
       action: () => {
-        addToHistory(`<strong>Phishfinder</strong> - Capstone Project (2024)<br>
-        A lightweight Chrome extension using AI and algorithmic analysis for real-time phishing detection in Gmail.<br>
-        <strong>Tech Stack:</strong> MongoDB, Express, Vue.js, Node.js<br>
-        <strong>Highlight:</strong> Received Capstone Award for Innovation`);
-      }
-    },
-    clear: {
-      name: 'clear',
-      description: 'Clear terminal',
-      action: () => {
-        setHistory([]);
+        navigate('/course/cst499');
       }
     },
     exit: {
@@ -113,13 +110,6 @@ const Terminal: React.FC<TerminalProps> = ({
         setTimeout(() => {
           setIsMinimized(true);
         }, 1500);
-      }
-    },
-    open: {
-      name: 'open',
-      description: 'Restore the terminal if minimized',
-      action: () => {
-        setIsMinimized(false);
       }
     }
   };
@@ -266,7 +256,20 @@ const Terminal: React.FC<TerminalProps> = ({
       return null;
     }
     
-    console.log("Rendering slash menu - commands:", Object.keys(commands));
+    // Define the order you want commands to appear in
+    const orderedCommandKeys = [
+      'clear',
+      'help',
+      'about',
+      'projects',
+      'resume',
+      'contact',
+      'phishfinder',
+      'exit'
+    ];
+    
+    // Filter out any keys that don't exist in commands
+    const validOrderedKeys = orderedCommandKeys.filter(key => key in commands);
     
     return (
       <div 
@@ -283,7 +286,7 @@ const Terminal: React.FC<TerminalProps> = ({
         }}
       >
         <div className="slash-command-header">Available Commands</div>
-        {Object.keys(commands).map((key, index) => (
+        {validOrderedKeys.map((key, index) => (
           <div 
             key={key}
             className={`slash-command-item ${index === selectedCommandIndex ? 'selected' : ''}`}

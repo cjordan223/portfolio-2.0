@@ -6,7 +6,7 @@ const Resume: React.FC = () => {
     <div className="resume-container">
       <div className="resume-header">
         <h1>My Resume</h1>
-        <a href="/resume.pdf" download className="download-button">
+        <a href="public/Conner_Jordan_Software_Engineer.pdf" download className="download-button">
           Download Resume
         </a>
       </div>

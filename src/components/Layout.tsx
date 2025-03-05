@@ -1,5 +1,6 @@
 import React, { ReactNode, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import ThemeToggle from './ThemeToggle';
 import Terminal from './Terminal';
 import AuroraBackground from './AuroraBackground';
 import { useTheme } from '../themes/ThemeContext';
@@ -21,10 +22,24 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     console.log(`Current path: ${location.pathname}, isHomePage: ${isHomePage}`);
   }, [location.pathname, isHomePage]);
 
+  // Debug AuroraBackground mounting
+  useEffect(() => {
+    console.log('AuroraBackground should be mounting');
+  }, []);
+
   return (
-    <div className="open-layout" style={{ color: theme.text }}>
-      {/* Aurora Background with blue/cyan theme */}
-      <AuroraBackground theme="cyan" />
+    <div className="open-layout" style={{ color: theme.text, position: 'relative', minHeight: '100vh' }}>
+      {/* Force Aurora Background to be full screen and below content */}
+      <div style={{ 
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: -1
+      }}>
+        <AuroraBackground theme="cyan" />
+      </div>
       
       {/* Show navigation only if terminal is minimized and on non-home pages */}
       {(isTerminalMinimized && !isHomePage) && (
@@ -33,6 +48,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <Link to="/projects" className="nav-link" style={{ color: theme.text }}>Projects</Link>
           <Link to="/resume" className="nav-link" style={{ color: theme.text }}>Resume</Link>
           <Link to="/contact" className="nav-link" style={{ color: theme.text }}>Contact</Link>
+          <ThemeToggle />
         </nav>
       )}
 

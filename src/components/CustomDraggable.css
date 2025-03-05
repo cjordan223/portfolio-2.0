@@ -1,0 +1,16 @@
+.custom-draggable {
+  user-select: none;
+}
+
+.custom-draggable.dragging {
+  opacity: 0.9;
+  z-index: 1001 !important;
+}
+
+.terminal-handle {
+  cursor: grab;
+}
+
+.terminal-handle:active {
+  cursor: grabbing;
+} 

@@ -90,7 +90,6 @@ const courseData: CourseData[] = [
     term: 'Fall 2023 - Term B',
     credits: 4,
     personalNote: 'Diving deep into algorithms and data structures improved my problem-solving skills and code efficiency.',
-    imageUrl: "https://media.geeksforgeeks.org/wp-content/cdn-uploads/20230807133054/Data-structure-algorithm.png",
     grade: "A"
   },
   {
@@ -302,17 +301,17 @@ const CoursePage: React.FC = () => {
               <h3>Application Screenshots:</h3>
               <div className="screenshots-grid">
                 {[
-                  { id: 1, image: "oauth.png", caption: "OAuth 2.0 Secure Authentication Flow" },
-                  { id: 2, image: "Metrics.png", caption: "Security Metrics Dashboard" },
-                  { id: 3, image: "Analysis2.png", caption: "Advanced Email Analysis" },
-                  { id: 4, image: "Analysis.png", caption: "Threat Detection Interface" },
-                  { id: 5, image: "mirror.png", caption: "Gmail Mirror Integration" },
-                  { id: 6, image: "DB.png", caption: "MongoDB Profile Storage" }
+                  { id: 1, image: "/img/oauth.png", caption: "OAuth 2.0 Secure Authentication Flow" },
+                  { id: 2, image: "/img/Metrics.png", caption: "Security Metrics Dashboard" },
+                  { id: 3, image: "/img/Analysis2.png", caption: "Advanced Email Analysis" },
+                  { id: 4, image: "/img/Analysis.png", caption: "Threat Detection Interface" },
+                  { id: 5, image: "/img/mirror.png", caption: "Gmail Mirror Integration" },
+                  { id: 6, image: "/img/DB.png", caption: "MongoDB Profile Storage" }
                 ].map(item => (
                   <div key={item.id} className="screenshot-card" onClick={() => handleOpenModal(item.image)}>
                     <div className="image-container">
                       <img 
-                        src={`/img/${item.image}`} 
+                        src={item.image} 
                         alt={item.caption} 
                         className="screenshot"
                       />

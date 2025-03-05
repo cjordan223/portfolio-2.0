@@ -95,38 +95,63 @@ interface AuroraBackgroundProps {
   theme?: ThemeKey;
 }
 
-const AuroraBackground: React.FC<AuroraBackgroundProps> = ({ theme = 'purple' }) => {
+const AuroraBackground: React.FC<AuroraBackgroundProps> = ({ theme = 'cyan' }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentTheme, setCurrentTheme] = useState<ThemeKey>(theme);
+  const [isInitialized, setIsInitialized] = useState(false);
   
   // Update if theme prop changes
   useEffect(() => {
     setCurrentTheme(theme);
   }, [theme]);
 
+  // Separate the script loading from the aurora setup
   useEffect(() => {
     // Add SimplexNoise script
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/simplex-noise@2.4.0/simplex-noise.min.js';
-    script.async = true;
+    let script = document.getElementById('simplex-noise-script') as HTMLScriptElement;
     
-    script.onload = () => {
-      if (containerRef.current) {
-        setupAurora();
-      }
+    if (!script) {
+      script = document.createElement('script');
+      script.id = 'simplex-noise-script';
+      script.src = 'https://cdn.jsdelivr.net/npm/simplex-noise@2.4.0/simplex-noise.min.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+    
+    const handleScriptLoad = () => {
+      setIsInitialized(true);
     };
     
-    document.body.appendChild(script);
-
+    if (script.loaded) {
+      setIsInitialized(true);
+    } else {
+      script.addEventListener('load', handleScriptLoad);
+    }
+    
     return () => {
-      // Clean up
-      document.body.removeChild(script);
+      if (script) {
+        script.removeEventListener('load', handleScriptLoad);
+      }
+    };
+  }, []);
+  
+  // Setup Aurora when script is loaded and when theme changes
+  useEffect(() => {
+    if (isInitialized && containerRef.current && window.SimplexNoise) {
+      console.log('Setting up Aurora with theme:', currentTheme);
+      setupAurora();
+    }
+  }, [isInitialized, currentTheme]);
+
+  // Clean up on unmount
+  useEffect(() => {
+    return () => {
       const canvasElement = document.querySelector('.aurora-canvas-b');
       if (canvasElement) {
         canvasElement.remove();
       }
     };
-  }, [currentTheme]); // Re-run when theme changes
+  }, []);
 
   const setupAurora = () => {
     // Get the current theme settings
