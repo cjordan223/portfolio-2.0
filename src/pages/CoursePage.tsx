@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import Layout from '../components/Layout';
 import { useTheme } from '../themes/ThemeContext';
 import { motion } from 'framer-motion';
 
@@ -169,15 +168,13 @@ const CoursePage: React.FC = () => {
 
   if (!course) {
     return (
-      <Layout>
-        <div className="course-not-found">
-          <h2>Course Not Found</h2>
-          <p>The course you're looking for doesn't exist or may have been moved.</p>
-          <Link to="/projects" className="back-link">
-            Back to Projects
-          </Link>
-        </div>
-      </Layout>
+      <div className="course-not-found">
+        <h2>Course Not Found</h2>
+        <p>The course you're looking for doesn't exist or may have been moved.</p>
+        <Link to="/projects" className="back-link">
+          Back to Projects
+        </Link>
+      </div>
     );
   }
 
@@ -192,7 +189,7 @@ const CoursePage: React.FC = () => {
   };
 
   return (
-    <Layout>
+    <>
       <div className="course-page">
         <motion.div 
           className="breadcrumbs"
@@ -758,7 +755,7 @@ const CoursePage: React.FC = () => {
         }
         `}
       </style>
-    </Layout>
+    </>
   );
 };
 

@@ -42,8 +42,8 @@ const Terminal: React.FC<TerminalProps> = ({
   // Add a class that we can use in testing
   const terminalClass = isMainTerminal ? "main-terminal" : "secondary-terminal";
 
-  // Updated commands with your real information
-  const commands: Record<string, Command> = {
+  // Base commands that are always available
+  const baseCommands: Record<string, Command> = {
     clear: {
       name: 'clear',
       description: 'Clear terminal',
@@ -101,12 +101,16 @@ const Terminal: React.FC<TerminalProps> = ({
       action: () => {
         navigate('/course/cst499');
       }
-    },
+    }
+  };
+
+  // Exit command - only available when NOT on the landing page
+  const exitCommand: Record<string, Command> = {
     exit: {
       name: 'exit',
       description: 'Minimize terminal and show navigation bar',
       action: () => {
-        addToHistory('Minimizing terminal... Classic navigation bar will appear. Type "open" anywhere to restore the terminal experience.');
+        addToHistory('Minimizing terminal... Classic navigation bar will appear.');
         setTimeout(() => {
           setIsMinimized(true);
         }, 1500);
@@ -114,11 +118,16 @@ const Terminal: React.FC<TerminalProps> = ({
     }
   };
 
+  // Combine commands based on current page
+  const commands: Record<string, Command> = isHomePage 
+    ? { ...baseCommands } 
+    : { ...baseCommands, ...exitCommand };
+
   // Initialize typed.js for welcome message
   useEffect(() => {
     if (welcomeRef.current) {
       const typed = new Typed(welcomeRef.current, {
-        strings: [`Welcome to my Portfolio`],
+        strings: [`Conner Jordan`],
         typeSpeed: 40,
         showCursor: false,
         autoInsertCss: true,
@@ -521,7 +530,7 @@ const Terminal: React.FC<TerminalProps> = ({
           marginBottom: '10px'
         }}>
           <span style={{ fontSize: '0.8rem', color: 'white', padding: '0 8px' }}>
-            drag to move (or type 'help')
+            Type "exit" for Classic View, or drag to move
           </span>
           <div 
             className="terminal-toggle"
