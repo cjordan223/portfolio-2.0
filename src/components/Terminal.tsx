@@ -590,7 +590,6 @@ const Terminal: React.FC<TerminalProps> = ({
         {isHomePage && welcomeMessage && (
           <div className="welcome-message">
             <span ref={welcomeRef}></span>
-            <div className="help-hint">Type "help" to see available commands</div>
           </div>
         )}
         

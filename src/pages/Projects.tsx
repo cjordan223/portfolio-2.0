@@ -309,7 +309,16 @@ const Projects: React.FC = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.4 }
+      transition: { duration: 0.5 }
+    }
+  };
+  
+  const fadeInVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.5 }
     }
   };
 
@@ -333,10 +342,15 @@ const Projects: React.FC = () => {
   return (
     <div className="projects-container">
       <motion.h1
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        style={{ color: theme.primary }}
+        style={{ 
+          color: theme.text,
+          textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)',
+          position: 'relative',
+          zIndex: 5
+        }}
+        variants={fadeInVariants}
+        initial="hidden"
+        animate="visible"
       >
         Projects & Portfolio
       </motion.h1>
@@ -353,9 +367,9 @@ const Projects: React.FC = () => {
             key={category.id}
             className="category-btn"
             style={{ 
-              backgroundColor: activeCategory === category.id ? theme.primary : 'transparent',
-              color: activeCategory === category.id ? theme.cardBackground : theme.text,
-              borderColor: theme.border
+              backgroundColor: activeCategory === category.id ? theme.primary : 'rgba(0, 0, 0, 0.2)',
+              color: activeCategory === category.id ? '#ffffff' : theme.text,
+              borderColor: activeCategory === category.id ? theme.primary : 'rgba(255, 255, 255, 0.3)'
             }}
             onClick={() => setActiveCategory(category.id)}
           >

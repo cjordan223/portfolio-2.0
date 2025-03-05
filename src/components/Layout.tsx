@@ -1,11 +1,10 @@
 import React, { ReactNode, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import ThemeToggle from './ThemeToggle';
 import Terminal from './Terminal';
+import AuroraBackground from './AuroraBackground';
 import { useTheme } from '../themes/ThemeContext';
 import { useTerminal } from '../contexts/TerminalContext';
 import './Layout.css';
-import backgroundVideo from '/media/new_background_compressed.mp4';
 
 interface LayoutProps {
   children: ReactNode;
@@ -24,15 +23,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <div className="open-layout" style={{ color: theme.text }}>
-      {/* Global Video Background */}
-      <div className="video-background">
-        <video autoPlay muted loop playsInline id="background-video">
-          <source src={backgroundVideo} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        {/* Add overlay for better text contrast */}
-        <div className="video-overlay"></div>
-      </div>
+      {/* Aurora Background with blue/cyan theme */}
+      <AuroraBackground theme="cyan" />
       
       {/* Show navigation only if terminal is minimized and on non-home pages */}
       {(isTerminalMinimized && !isHomePage) && (
@@ -41,7 +33,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <Link to="/projects" className="nav-link" style={{ color: theme.text }}>Projects</Link>
           <Link to="/resume" className="nav-link" style={{ color: theme.text }}>Resume</Link>
           <Link to="/contact" className="nav-link" style={{ color: theme.text }}>Contact</Link>
-          <ThemeToggle />
         </nav>
       )}
 

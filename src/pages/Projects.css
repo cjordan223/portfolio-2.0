@@ -15,22 +15,31 @@ h1 {
   justify-content: center;
   gap: 0.8rem;
   margin-bottom: 2.5rem;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+  position: relative;
+  z-index: 5;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 .category-btn {
   padding: 0.6rem 1.2rem;
   border-radius: 30px;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   border: 2px solid;
   background-color: transparent;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 5;
 }
 
 .category-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .projects-grid {
@@ -218,6 +227,16 @@ h1 {
   font-size: 1.1rem;
 }
 
+.projects-container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: inherit;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  position: relative;
+  z-index: 5;
+}
+
 @media (max-width: 768px) {
   .projects-container {
     padding: 2rem 1.5rem;
@@ -233,6 +252,8 @@ h1 {
     width: auto;
     max-width: none;
     margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
   }
   
   .projects-grid {
