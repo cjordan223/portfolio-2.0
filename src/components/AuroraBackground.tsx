@@ -122,11 +122,8 @@ const AuroraBackground: React.FC<AuroraBackgroundProps> = ({ theme = 'cyan' }) =
       setIsInitialized(true);
     };
     
-    if (script.loaded) {
-      setIsInitialized(true);
-    } else {
-      script.addEventListener('load', handleScriptLoad);
-    }
+    // Add load event listener - this is the reliable way to check script loading
+    script.addEventListener('load', handleScriptLoad);
     
     return () => {
       if (script) {

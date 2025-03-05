@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useSpring, animated } from '@react-spring/three';
 import { OrbitControls, Html } from '@react-three/drei';
+import * as THREE from 'three';
 import './WebApps.css';
 
 interface Project {
@@ -12,9 +13,9 @@ interface Project {
   category: string;
   tags: string[];
   description: string;
-  image?: string;
-  path?: string;
-  site?: string;
+  image: string;
+  path: string;
+  site: string;
 }
 
 // 3D Cube Face component
@@ -152,6 +153,7 @@ const WebApps: React.FC = () => {
       description: "A complete redesign of my personal portfolio using React, TypeScript, and Framer Motion. Features a custom terminal interface, animated transitions, and responsive design principles.",
       image: "/img/portfolio.png",
       path: "https://github.com/connerjordan/portfolio-2.0",
+      site: "https://connerjordan.com",
     },
     {
       name: "PhishFinder",
@@ -160,6 +162,7 @@ const WebApps: React.FC = () => {
       description: "PhishFinder is a web extension designed to enhance email security by identifying and flagging phishing and spearphishing patterns. Built using Vue.js and integrating with Gmail's API through OAuth 2.0, it provides real-time security analysis of incoming emails.",
       image: "/img/phishfinderlogo.png",
       path: "https://github.com/connerjordan/phishfinder",
+      site: "https://phishfinder.com",
     },
     {
       name: "Weather Dashboard",
@@ -168,6 +171,7 @@ const WebApps: React.FC = () => {
       description: "Interactive weather dashboard that fetches and visualizes weather data from multiple APIs. Allows users to search locations and view detailed forecast information with interactive charts.",
       image: "/img/weather.jpg",
       path: "https://github.com/connerjordan/weather-dashboard",
+      site: "https://weatherdashboard.com",
     },
     {
       name: "E-Commerce Platform",
@@ -176,6 +180,7 @@ const WebApps: React.FC = () => {
       description: "Full-stack e-commerce application with product catalog, shopping cart, user authentication, and order processing. Includes admin dashboard for inventory management.",
       image: "/img/ecommerce.jpg",
       path: "https://github.com/connerjordan/ecommerce-platform",
+      site: "https://ecommerceplatform.com",
     },
     {
       name: "Task Manager",
@@ -184,6 +189,7 @@ const WebApps: React.FC = () => {
       description: "Collaborative task management application with real-time updates using Firebase. Features task categorization, priority levels, and team assignment capabilities.",
       image: "/img/taskmanager.jpg",
       path: "https://github.com/connerjordan/task-manager",
+      site: "https://taskmanager.com",
     },
     {
       name: "Recipe Finder",
@@ -192,6 +198,7 @@ const WebApps: React.FC = () => {
       description: "Web application that helps users find recipes based on available ingredients. Integrates with recipe APIs and provides filtering options for dietary preferences.",
       image: "/img/recipe.jpg",
       path: "https://github.com/connerjordan/recipe-finder",
+      site: "https://recipefinder.com",
     }
   ], []);
 

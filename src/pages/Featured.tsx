@@ -9,9 +9,9 @@ interface Project {
   category: string;
   tags: string[];
   description: string;
-  image?: string;
-  path?: string;
-  site?: string;
+  image: string;
+  path: string;
+  site: string;
 }
 
 const Featured: React.FC = () => {
@@ -37,6 +37,7 @@ const Featured: React.FC = () => {
       description: "PhishFinder is a web extension designed to enhance email security by identifying and flagging phishing and spearphishing patterns. Built using Vue.js and integrating with Gmail's API through OAuth 2.0, it provides real-time security analysis of incoming emails.",
       image: "/img/phishfinderlogo.png",
       path: "https://github.com/connerjordan/phishfinder",
+      site: "https://phishfinder.io"
     },
     {
       name: "Portfolio Website",
@@ -45,6 +46,7 @@ const Featured: React.FC = () => {
       description: "A complete redesign of my personal portfolio using React, TypeScript, and Framer Motion. Features a custom terminal interface, animated transitions, and responsive design principles.",
       image: "/img/portfolio.png",
       path: "https://github.com/connerjordan/portfolio-2.0",
+      site: "https://connerjordan.com"
     },
     {
       name: "Flashcards App",
@@ -53,6 +55,7 @@ const Featured: React.FC = () => {
       description: "I'm working on my Capstone project and studying for CompTIA, but still want to make time for personal projects, so I created flashcards in Swift to test in the iOS/XCode environment. It was surprisingly easy, with Swift having a lot of similarites to the React component structure.",
       image: "/img/flashcard.png",
       path: "https://github.com/connerjordan/flashcards-swift",
+      site: "https://flashcards.connerjordan.com"
     }
   ], []);
 
