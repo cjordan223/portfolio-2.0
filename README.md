@@ -88,6 +88,26 @@ This portfolio is configured for deployment on Netlify:
 3. The included `netlify.toml` file handles all deployment settings
 4. Netlify will automatically deploy when you push to your main branch
 
+#### Netlify Troubleshooting
+
+If you encounter dependency conflicts during Netlify deployment:
+
+1. In Netlify's deploy settings, set the following environment variables:
+   - `NPM_FLAGS` = `--force --legacy-peer-deps`
+   - `NODE_VERSION` = `18`
+
+2. If builds still fail, you can manually trigger a build with:
+   ```bash
+   git push origin main
+   ```
+
+3. As a last resort, you can deploy locally to Netlify using their CLI:
+   ```bash
+   npm install -g netlify-cli
+   netlify login
+   netlify deploy --prod
+   ```
+
 ### GitHub Pages Deployment
 
 For GitHub Pages deployment:
