@@ -79,10 +79,27 @@ portfolio-2.0/
 
 ## Deployment
 
-This portfolio is configured for automatic deployment to GitHub Pages using GitHub Actions. When you push to the main branch, it will:
+### Netlify Deployment
 
-1. Build the project
-2. Deploy to GitHub Pages
+This portfolio is configured for deployment on Netlify:
+
+1. Connect your GitHub repository to Netlify
+2. Netlify will automatically detect the Vite configuration
+3. The included `netlify.toml` file handles all deployment settings
+4. Netlify will automatically deploy when you push to your main branch
+
+### GitHub Pages Deployment
+
+For GitHub Pages deployment:
+
+1. Install dependencies if not already installed: `npm install`
+2. Run the deployment script: `./deploy-gh-pages.sh`
+3. Your site will be deployed to `https://yourusername.github.io/portfolio-2.0/`
+
+Alternatively, you can run the GitHub Pages deployment manually:
+```bash
+npm run deploy
+```
 
 ## Customization
 
