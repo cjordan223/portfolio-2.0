@@ -3,7 +3,6 @@ import { useTheme } from '../themes/ThemeContext';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import './Projects.css';
-import CustomDraggable from '../components/CustomDraggable';
 
 interface Project {
   name: string;
@@ -112,9 +111,9 @@ const Projects: React.FC = () => {
     {
       name: "Data Structures & Algorithms",
       category: "datascience",
-      tags: ["Java", "DSA", "Computer Science", "Algorithms"],
+      tags: ["Java", "", "Computer Science", "Algorithms"],
       description: "Implementation of classic data structures and algorithms in Java with performance analysis.",
-      image: "https://datastructuresandalgorithm.com/wp-content/uploads/2022/11/DSA.png",
+      image: "data:image/png;base64,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",
       site: "https://github.com/cjordan223/DSA-collection.git"
     },
     {
@@ -122,7 +121,7 @@ const Projects: React.FC = () => {
       category: "education",
       tags: ["Professional Writing", "Research", "Ethics"],
       description: "Students learn professional writing, presentation, research, and critical-thinking skills.",
-      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRz8bcyP6fWEtvxSXHuxlTGImVBEPtEi7mVyQ&s",
+      image: "public/img/SCR-20250406-thju.png",
       site: "/course/cst300",
       imageHeight: "100px"
     },
@@ -267,7 +266,7 @@ const Projects: React.FC = () => {
       category: "datascience",
       tags: ["Python", "Jupyter", "Data Analysis", "Pandas"],
       description: "Analysis of student housing data, exploring factors affecting housing choices and preferences among university students.",
-      image: "/img/jupyter.png",
+      image: "public/img/Untitled.jpg",
       site: "/html/studenthousing.html"
     },
     {
@@ -275,7 +274,7 @@ const Projects: React.FC = () => {
       category: "datascience",
       tags: ["Python", "Jupyter", "Data Visualization", "Analysis"],
       description: "Comparative analysis of internet service providers' performance based on speed test data across different regions.",
-      image: "/img/jupyter.png",
+      image: "public/img/speedtest.jpg",
       site: "/html/speedtest_compare.html"
     },
     {
@@ -283,7 +282,7 @@ const Projects: React.FC = () => {
       category: "datascience",
       tags: ["Python", "Jupyter", "Data Science", "Marketing"],
       description: "Exploratory analysis of marketing campaign data to identify patterns and success factors for different customer segments.",
-      image: "/img/jupyter.png",
+      image: "public/img/campaign.jpg",
       site: "/html/campaign-exploration-1.html"
     },
   ], []);

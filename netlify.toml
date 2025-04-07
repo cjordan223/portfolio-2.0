@@ -6,13 +6,6 @@
   NODE_VERSION = "18"
   NPM_FLAGS = "--force --legacy-peer-deps"
 
-# Override the install command to force dependency resolution
-[[plugins]]
-package = "netlify-plugin-inline-functions-env"
-  [plugins.inputs]
-  buildEvent = "onPreBuild" 
-  command = "npm install --force --legacy-peer-deps"
-
 # Handle SPA routing - redirect all paths to index.html so that React Router works
 [[redirects]]
   from = "/*"

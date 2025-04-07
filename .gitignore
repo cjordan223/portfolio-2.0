@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 media
 media/new_background.mp4
+# Local Netlify folder
+.netlify

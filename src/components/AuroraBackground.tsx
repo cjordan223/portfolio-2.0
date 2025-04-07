@@ -134,9 +134,19 @@ const AuroraBackground: React.FC<AuroraBackgroundProps> = ({ theme = 'cyan' }) =
   
   // Setup Aurora when script is loaded and when theme changes
   useEffect(() => {
+    // Add detailed logging
+    console.log('Aurora setup effect triggered.', {
+      isInitialized,
+      containerExists: !!containerRef.current,
+      simplexNoiseExists: !!window.SimplexNoise,
+      currentTheme
+    });
+    
     if (isInitialized && containerRef.current && window.SimplexNoise) {
       console.log('Setting up Aurora with theme:', currentTheme);
       setupAurora();
+    } else {
+      console.warn('Aurora setup conditions not met.');
     }
   }, [isInitialized, currentTheme]);
 
@@ -272,10 +282,14 @@ const AuroraBackground: React.FC<AuroraBackgroundProps> = ({ theme = 'cyan' }) =
 
     function createCanvas() {
       container = containerRef.current as HTMLElement;
+      if (container) {
+        container.setAttribute('data-darkreader-ignore', '');
+      }
       canvas = {
         a: document.createElement('canvas'),
         b: document.createElement('canvas')
       };
+      canvas.b.setAttribute('data-darkreader-ignore', '');
       canvas.b.className = 'aurora-canvas-b';
       canvas.b.style.position = 'fixed';
       canvas.b.style.top = '0';
@@ -346,7 +360,11 @@ const AuroraBackground: React.FC<AuroraBackgroundProps> = ({ theme = 'cyan' }) =
   };
 
   return (
-    <div ref={containerRef} className="aurora-background-container">
+    <div 
+      ref={containerRef} 
+      className="aurora-background-container" 
+      data-darkreader-ignore
+    >
       <div className="aurora-overlay"></div>
     </div>
   );
